@@ -1,0 +1,2 @@
+../application/src/app.cpp:6:6:void setup()	4	static
+../application/src/app.cpp:10:6:void loop()	8	static
