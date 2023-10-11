@@ -1,0 +1,16 @@
+-Wold-style-cast
+-Wuseless-cast
+-Wsuggest-override
+-fno-exceptions
+-fno-rtti
+-fno-builtin 
+-fmessage-length=0 
+-fsigned-char 
+-mlittle-endian 
+-std=gnu++0x 
+-fdata-sections 
+-fno-common 
+-fomit-frame-pointer 
+-fno-unroll-loops 
+-ffast-math 
+-ftree-vectorize
