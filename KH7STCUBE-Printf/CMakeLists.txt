@@ -17,8 +17,6 @@ set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
 set(GTEST_LIB_DIR third-party/out/lib/gtest)
 
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
-
-
 add_definitions(-DGTEST_OS_NONE)
 
 set(STM32CUBEMX_GENERATED_FILES
