@@ -1,0 +1,9 @@
+Go to the project directory
+
+mkdir build
+cd build
+cmake -G "Ninja" -DCMAKE_TOOLCHAIN_FILE=../arm-none-eabi-gcc.cmake -DCMAKE_BUILD_TYPE=Debug ..
+cmake --build . -- -j4
+
+Cmake Clean
+cmake --build . --target clean

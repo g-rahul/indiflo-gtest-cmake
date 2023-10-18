@@ -1,0 +1,3 @@
+[submodule "KH7STCUBE-GTest/googletest"]
+	path = KH7STCUBE-GTest/googletest
+	url = https://github.com/google/googletest.git
