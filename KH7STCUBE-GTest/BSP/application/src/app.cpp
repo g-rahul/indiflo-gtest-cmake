@@ -1,11 +1,13 @@
 #include "app.h"
 #include "main.h"
 #include <stdio.h>
-//#include <gtest/gtest.h>
-#if 0
+
+#define GTEST_ENABLE
+#ifdef GTEST_ENABLE
+#include <gtest/gtest.h>
 static void gtest_init(int argc, char* argv[]) {
 
-	::testing::InitGoogleTest(&argc,argv);
+	::testing::InitGoogleTest();
 	int result = RUN_ALL_TESTS();
 	std::cout << "Testing programm finished. Awaiting shutdown." << std::endl;
 
@@ -21,7 +23,6 @@ static void gtest_init(int argc, char* argv[]) {
     }
 }
 #endif
-
 
 #if 0
 char *getcwd (char *__buf, size_t __size)
@@ -50,8 +51,10 @@ void loop() {
 	int argc=1;
 	char args[]="Basic_Test";
 	char* argv = &args[0];
+#ifdef GTEST_ENABLE
     // For future episodes ;)
-	//gtest_init(argc,&argv);
+	gtest_init(argc,&argv);
+#endif
 }
 
 }

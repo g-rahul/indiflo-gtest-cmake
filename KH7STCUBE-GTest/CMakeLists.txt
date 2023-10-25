@@ -9,24 +9,6 @@
 
 
 #[[ =====================================================================================================
-    ====================================== Language Options  ============================================ 
-    ===================================================================================================== ]]
-
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_C_STANDARD 11)
-set(CMAKE_C_STANDARD_REQUIRED ON)
-set(CMAKE_C_EXTENSIONS OFF)
-set(CMAKE_CXX_EXTENSIONS OFF)
-
-set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g3")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3 -g0")
-
-set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SRC_DIR}/arm-none-eabi-gcc.cmake)
-#set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11") // Required ??
-
-
-#[[ =====================================================================================================
     ======================================== Source Files  ============================================== 
     ===================================================================================================== ]]
 
@@ -51,17 +33,13 @@ set_source_files_properties(${STM32_CUBE_GEN} PROPERTIES COMPILE_FLAGS -Wno-unus
 #[[ =====================================================================================================
     ========================================= Executeable =============================================== 
     ===================================================================================================== ]]
-
 set(EXECUTABLE ${PROJECT_NAME}.out)
-
 #link_directories(${GTEST_LIB_DIR})
 add_executable(${EXECUTABLE} ${STM32_CUBE_GEN} ${APPLICATION_FILES})
 
 # Improve clean target
 set_target_properties(${EXECUTABLE} PROPERTIES ADDITIONAL_CLEAN_FILES
         "${PROJECT_NAME}.bin;${PROJECT_NAME}.hex;${PROJECT_NAME}.map;${PROJECT_NAME}.elf")
-
-
 
 
 #[[ =====================================================================================================
@@ -85,6 +63,29 @@ target_include_directories(${EXECUTABLE} PRIVATE
         BSP/application/inc
 )
 
+
+
+
+#[[ =====================================================================================================
+    ====================================== Language Options  ============================================ 
+    ===================================================================================================== ]]
+
+#set_property(TARGET ${EXECUTABLE} PROPERTY CXX_STANDARD 14)
+#set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_C_EXTENSIONS OFF)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g3")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -g0")
+
+set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SRC_DIR}/arm-none-eabi-gcc.cmake)
+#set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11") // Required ??
+
+
+
 #[[ =====================================================================================================
     ====================================== Compile/Link Flags =========================================== 
     ===================================================================================================== ]]
@@ -100,11 +101,55 @@ target_compile_options(${EXECUTABLE} PRIVATE
         -Wall
         -Wextra
         -pedantic
-
+        
         $<$<COMPILE_LANGUAGE:CXX>:@${CMAKE_SOURCE_DIR}/gcc-options-cxx.txt>
         $<$<COMPILE_LANGUAGE:C>:@${CMAKE_SOURCE_DIR}/gcc-options-c.txt>
         $<$<CONFIG:Debug>:-Og>
         )
+
+
+
+#[[ =====================================================================================================
+    ======================================= Build Gtest Lib ============================================= 
+    ===================================================================================================== ]]
+include(CMakeDependentOption)
+include(GNUInstallDirs)
+set(GOOGLETEST_VERSION 1.14.0)
+add_subdirectory(googletest/googletest/)
+target_compile_definitions(gtest PRIVATE GTEST_OS_NONE=1) 
+target_compile_options(gtest PRIVATE "-std=gnu++14")
+
+target_compile_definitions(gtest_main PRIVATE GTEST_OS_NONE=1) 
+
+target_compile_options(gtest PRIVATE 
+        -mabi=aapcs
+        -fdata-sections
+        -ffunction-sections
+        -Wall
+        -Wextra
+        -pedantic
+        
+        $<$<COMPILE_LANGUAGE:CXX>:@${CMAKE_SOURCE_DIR}/gcc-options-cxx.txt>
+        $<$<COMPILE_LANGUAGE:C>:@${CMAKE_SOURCE_DIR}/gcc-options-c.txt>
+        $<$<CONFIG:Debug>:-Og>
+       )
+
+target_compile_options(gtest_main PRIVATE 
+        -mabi=aapcs
+        -fdata-sections
+        -ffunction-sections
+        -Wall
+        -Wextra
+        -pedantic
+        
+        $<$<COMPILE_LANGUAGE:CXX>:@${CMAKE_SOURCE_DIR}/gcc-options-cxx.txt>
+        $<$<COMPILE_LANGUAGE:C>:@${CMAKE_SOURCE_DIR}/gcc-options-c.txt>
+        $<$<CONFIG:Debug>:-Og>
+       )
+
+target_include_directories(${EXECUTABLE} PRIVATE
+        googletest/googletest/include
+)
 
 #[[
 SET(CMAKE_C_FLAGS "-nostdlib -mthumb -fno-builtin -fmessage-length=0 -fsigned-char -mcpu=cortex-m7 -mfpu=fpv5-sp-d16 -mlittle-endian -mfloat-abi=hard -Wall -std=gnu11 -ffunction-sections -fdata-sections -fno-common -fomit-frame-pointer -mabi=aapcs -fno-unroll-loops -ffast-math -ftree-vectorize" CACHE INTERNAL "c compiler flags")
@@ -143,6 +188,13 @@ target_link_options(${EXECUTABLE} PRIVATE
         -g3 
         -Xlinker
         )
+
+#[[ =====================================================================================================
+    ====================================== Link Gtest to Target ========================================= 
+    ===================================================================================================== ]]
+add_dependencies(${EXECUTABLE} gtest)
+link_directories(${CMAKE_BINARY_DIR}/lib)
+target_link_libraries(${EXECUTABLE} gtest)
 
 
 #[[ =====================================================================================================
