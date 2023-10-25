@@ -1,12 +1,8 @@
 #include "app.h"
 #include "main.h"
 #include <stdio.h>
-#include <ostream>
-#include <iostream>
-#include <gtest/gtest.h>
-#include <unistd.h>
-#include <sys/stat.h>
-
+//#include <gtest/gtest.h>
+#if 0
 static void gtest_init(int argc, char* argv[]) {
 
 	::testing::InitGoogleTest(&argc,argv);
@@ -24,9 +20,10 @@ static void gtest_init(int argc, char* argv[]) {
     	HAL_GPIO_TogglePin(KH7_USERLED_GPIO_Port,KH7_USERLED_Pin);
     }
 }
+#endif
 
-extern "C" {
 
+#if 0
 char *getcwd (char *__buf, size_t __size)
 {
 	UNUSED(__buf);
@@ -40,6 +37,9 @@ int	mkdir (const char *_path, mode_t __mode )
 	UNUSED(__mode);
 	return 0;
 }
+#endif
+
+extern "C" {
 
 void setup() {
     // For future episodes ;)
@@ -51,7 +51,7 @@ void loop() {
 	char args[]="Basic_Test";
 	char* argv = &args[0];
     // For future episodes ;)
-	gtest_init(argc,&argv);
+	//gtest_init(argc,&argv);
 }
 
 }

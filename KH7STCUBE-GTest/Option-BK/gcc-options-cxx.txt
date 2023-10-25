@@ -1,0 +1,8 @@
+-fcheck-new
+-Wreorder
+-Wno-overloaded-virtual # TODO: fix and remove
+-fno-exceptions
+-fno-rtti
+-fno-sized-deallocation
+-fno-threadsafe-statics
+-nostdinc++ # prevent using the toolchain's std c++ library

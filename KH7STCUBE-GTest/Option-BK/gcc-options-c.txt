@@ -1,0 +1,3 @@
+-fno-common
+-Wnested-externs
+-Wstrict-prototypes
