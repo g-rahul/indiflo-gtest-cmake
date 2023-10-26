@@ -60,7 +60,7 @@ set(STM32CUBEMX_GENERATED_FILES
 
 set(APPLICATION_SRC_FILES
         BSP/application/src/app.cpp
-        tests/dummy_test.cpp
+        #tests/dummy_test.cpp
 )
 
 set_source_files_properties(BSP/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_exti.c
@@ -73,9 +73,9 @@ set_source_files_properties(BSP/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_e
 
 set(EXECUTABLE ${PROJECT_NAME}.out)
 
-link_directories(${GTEST_LIB_DIR})
+#link_directories(${GTEST_LIB_DIR})
 add_executable(${EXECUTABLE} ${STM32CUBEMX_GENERATED_FILES} ${APPLICATION_SRC_FILES})
-target_link_libraries(${EXECUTABLE} libgtest.a)
+#target_link_libraries(${EXECUTABLE} libgtest.a)
 
 # Improve clean target
 set_target_properties(${EXECUTABLE} PROPERTIES ADDITIONAL_CLEAN_FILES
@@ -96,7 +96,7 @@ target_include_directories(${EXECUTABLE} SYSTEM PRIVATE
 
 target_include_directories(${EXECUTABLE} PRIVATE
         BSP/application/inc
-        third-party/out/include/gtest_includes
+        #third-party/out/include/gtest_includes
 )
 
 #[[
