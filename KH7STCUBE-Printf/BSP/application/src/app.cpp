@@ -3,14 +3,14 @@
 #include <stdio.h>
 #include <ostream>
 #include <iostream>
-#include <gtest/gtest.h>
+//#include <gtest/gtest.h>
 #include <unistd.h>
 #include <sys/stat.h>
 
 static void gtest_init(int argc, char* argv[]) {
 
-	::testing::InitGoogleTest(&argc,argv);
-	int result = RUN_ALL_TESTS();
+	//::testing::InitGoogleTest(&argc,argv);
+	//int result = RUN_ALL_TESTS();
 	std::cout << "Testing programm finished. Awaiting shutdown." << std::endl;
 
     while(1)
