@@ -18,7 +18,7 @@ OBJDUMP          = arm-none-eabi-objdump
 ZIG              = zig
 ZIGFLAGS         = -target thumb-freestanding-eabi -mcpu cortex_m4
 NXFLATLDFLAGS1   = -r -d -warn-common
-NXFLATLDFLAGS2   = -r -d -warn-common -T/home/rahul/Desktop/workbench/NUTTX_CMAKE_CXX/nuttx/binfmt/libnxflat/gnu-nxflat-pcrel.ld -no-check-sections
+NXFLATLDFLAGS2   = -r -d -warn-common -T/home/srivaths/workspace/nuttx/nuttx/binfmt/libnxflat/gnu-nxflat-pcrel.ld -no-check-sections
 OBJEXT           = .o
 LIBEXT           = .a
 EXEEXT           = 
@@ -28,11 +28,11 @@ HOSTCFLAGS       = -O2 -Wall -Wstrict-prototypes -Wshadow -DHAVE_STRTOK_C=1
 HOSTLDFLAGS      = 
 HOSTEXEEXT       = 
 LDNAME           = ld.script
-LDELFFLAGS       = -r -e main -T /home/rahul/Desktop/workbench/NUTTX_CMAKE_CXX/nuttx/binfmt/libelf/gnu-elf.ld
-EXTRA_LIBS       = /usr/share/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v7e-m/nofp/libgcc.a /usr/share/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libsupc++.a
+LDELFFLAGS       = -r -e main -T /home/srivaths/workspace/nuttx/nuttx/binfmt/libelf/gnu-elf.ld
+EXTRA_LIBS       = /usr/share/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/thumb/v7e-m/nofp/libgcc.a
 EXTRA_OBJS       = 
 HEAD_OBJ         = 
 LDENDGROUP       = 
-LDFLAGS          = -nostdlib --gc-sections --cref -Map=/home/rahul/Desktop/workbench/NUTTX_CMAKE_CXX/nuttx/nuttx.map
+LDFLAGS          = -nostdlib --gc-sections --cref -Map=/home/srivaths/workspace/nuttx/nuttx/nuttx.map
 LDSTARTGROUP     = 
 LDLIBS           = -lsched -ldrivers -lboards -lc -lmm -larch -lm -lxx -lapps -lfs -lbinfmt -lboard -lboard 

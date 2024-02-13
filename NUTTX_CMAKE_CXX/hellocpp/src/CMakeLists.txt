@@ -30,7 +30,7 @@ target_link_libraries(${EXE_NAME} fs)
 target_link_libraries(${EXE_NAME} binfmt)
 target_link_libraries(${EXE_NAME} board)
 target_link_libraries(${EXE_NAME} gcc)
-target_link_libraries(${EXE_NAME} supc++)
+#target_link_libraries(${EXE_NAME} supc++)
 target_link_libraries(${EXE_NAME} m)
 
 target_link_libraries(${EXE_NAME} --end-group)
