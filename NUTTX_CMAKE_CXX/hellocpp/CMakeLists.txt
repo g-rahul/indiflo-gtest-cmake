@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SRC_DIR}/arm-none-eabi-gcc.cmake)
 
-set(NUTTX_PATH "${CMAKE_SOURCE_DIR}/nuttx-export-12.4.0-RC0")
+set(NUTTX_PATH "${CMAKE_SOURCE_DIR}/nuttx-export-12.4.0")
 
 # include(cmake/stm32f4discovery.cmake)
 
