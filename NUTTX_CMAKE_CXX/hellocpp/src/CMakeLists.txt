@@ -16,21 +16,29 @@ add_custom_command(
         COMMAND ${CMAKE_OBJCOPY} ARGS -S -O binary ${CMAKE_BINARY_DIR}/${EXE_NAME}.elf ${CMAKE_BINARY_DIR}/${EXE_NAME}.bin
 )
 
-target_link_libraries(${EXE_NAME} --start-group)
+#target_link_libraries(${EXE_NAME} PUBLIC --start-group)
 
-target_link_libraries(${EXE_NAME} sched)
-target_link_libraries(${EXE_NAME} drivers)
-target_link_libraries(${EXE_NAME} boards)
-target_link_libraries(${EXE_NAME} c)
-target_link_libraries(${EXE_NAME} mm)
-target_link_libraries(${EXE_NAME} arch)
-target_link_libraries(${EXE_NAME} xx)
-target_link_libraries(${EXE_NAME} apps)
-target_link_libraries(${EXE_NAME} fs)
-target_link_libraries(${EXE_NAME} binfmt)
-target_link_libraries(${EXE_NAME} board)
-target_link_libraries(${EXE_NAME} gcc)
-target_link_libraries(${EXE_NAME} supc++)
-target_link_libraries(${EXE_NAME} m)
+target_link_libraries(${EXE_NAME} PUBLIC sched)
+target_link_libraries(${EXE_NAME} PUBLIC drivers)
+target_link_libraries(${EXE_NAME} PUBLIC boards)
+target_link_libraries(${EXE_NAME} PUBLIC c)
+target_link_libraries(${EXE_NAME} PUBLIC mm)
+target_link_libraries(${EXE_NAME} PUBLIC arch)
+target_link_libraries(${EXE_NAME} PUBLIC xx)
+target_link_libraries(${EXE_NAME} PUBLIC apps)
+target_link_libraries(${EXE_NAME} PUBLIC fs)
+target_link_libraries(${EXE_NAME} PUBLIC binfmt)
+target_link_libraries(${EXE_NAME} PUBLIC board)
+target_link_libraries(${EXE_NAME} PUBLIC gcc)
+#target_link_libraries(${EXE_NAME} supc++)
+target_link_libraries(${EXE_NAME} PUBLIC m)
 
-target_link_libraries(${EXE_NAME} --end-group)
+add_dependencies(${EXE_NAME} gtest)
+link_directories(${CMAKE_BINARY_DIR}/lib)
+link_directories(${EXE_NAME} ${NUTTX_PATH}/libs)
+
+target_link_libraries(${EXE_NAME} PUBLIC gtest)
+#target_link_libraries(${EXE_NAME} PUBLIC --end-group)
+
+
+

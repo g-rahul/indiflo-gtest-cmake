@@ -5,13 +5,13 @@ project(HelloCpp
         DESCRIPTION "Hello world C++ NuttX"
 )
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-# set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SRC_DIR}/arm-none-eabi-gcc.cmake)
 
-set(NUTTX_PATH "${CMAKE_SOURCE_DIR}/nuttx-export-12.4.0-RC0")
+set(NUTTX_PATH "${CMAKE_SOURCE_DIR}/nuttx-export-12.4.0")
 
 # include(cmake/stm32f4discovery.cmake)
 
@@ -36,6 +36,7 @@ include_directories(
         src
         ${NUTTX_PATH}/include
         ${NUTTX_PATH}/include/libcxx
+        ${NUTTX_PATH}/include/libcxxabi
         ${NUTTX_PATH}/arch/chip
 )
 
@@ -49,4 +50,56 @@ endif()
 set(CMAKE_SKIP_RPATH ON)
 set(CMAKE_CXX_LINK_EXECUTABLE "${CMAKE_LINKER} ${AC_LINKER_FLAGS} -o ${EXE_NAME}.elf <OBJECTS> <LINK_LIBRARIES>")
 set(BUILD_SHARED_LIBS OFF)
+
+#[[ =====================================================================================================
+    ======================================= Build Gtest Lib ============================================= 
+    ===================================================================================================== ]]
+include(CMakeDependentOption)
+include(GNUInstallDirs)
+set(GOOGLETEST_VERSION 1.14.0)
+add_subdirectory(googletest/googletest/)
+target_compile_definitions(gtest PRIVATE GTEST_OS_NONE=1) 
+#target_compile_options(gtest PRIVATE "-std=c++14")
+
+#target_compile_definitions(gtest_main PRIVATE GTEST_OS_NONE=1) 
+
+target_compile_options(gtest PRIVATE 
+        -mabi=aapcs
+        -fdata-sections
+        -ffunction-sections
+        -Wall
+        -Wextra
+        -fPIC
+        -pedantic
+        $<$<COMPILE_LANGUAGE:CXX>:@${CMAKE_SOURCE_DIR}/gcc-options-cxx.txt>
+        $<$<COMPILE_LANGUAGE:C>:@${CMAKE_SOURCE_DIR}/gcc-options-c.txt>
+        $<$<CONFIG:Debug>:-O3>
+       )
+#[[
+target_compile_options(gtest_main PRIVATE 
+        -mabi=aapcs
+        -fdata-sections
+        -ffunction-sections
+        -Wall
+        -Wextra
+        -fPIC
+        -pedantic
+        $<$<COMPILE_LANGUAGE:CXX>:@${CMAKE_SOURCE_DIR}/gcc-options-cxx.txt>
+        $<$<COMPILE_LANGUAGE:C>:@${CMAKE_SOURCE_DIR}/gcc-options-c.txt>
+        $<$<CONFIG:Debug>:-O3>
+       )
+
+target_include_directories(${EXE_NAME} PRIVATE
+        googletest/googletest/include
+)
+
+]]
+
+#[[ =====================================================================================================
+    ====================================== Link Gtest to Target ========================================= 
+    ===================================================================================================== ]]
+
+ 
 add_subdirectory(src)
+
+

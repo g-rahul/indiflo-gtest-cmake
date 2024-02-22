@@ -1,0 +1,5 @@
+-fno-rtti
+-fno-builtin
+-g3
+-fstack-usage
+-O0

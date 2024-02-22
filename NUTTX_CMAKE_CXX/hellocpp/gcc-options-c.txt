@@ -1,0 +1,10 @@
+-fno-builtin 
+-fmessage-length=0 
+-fsigned-char 
+-mlittle-endian 
+-std=gnu11 
+-fno-common 
+-fomit-frame-pointer 
+-fno-unroll-loops 
+-ffast-math 
+-ftree-vectorize
